@@ -120,27 +120,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 import google.cloud.logging
-import google.cloud.logging.handlers.transports
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            },
-        'gcloud': {
-            'level': 'INFO',
-            'class': 'google.cloud.logging.handlers.CloudLoggingHandler',
-            'client': google.cloud.logging.Client(),
-            # 'transport': google.cloud.logging.handlers.transports.SyncTransport
-            }
-        },
-    'loggers': {
-        'django': {
-            'handlers': ['console', 'gcloud'],
-            'level': 'INFO',
-            'propagate': True
-            },
-        },
-    }
+client = google.cloud.logging.Client()
+client.setup_logging()
